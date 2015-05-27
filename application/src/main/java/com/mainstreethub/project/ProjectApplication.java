@@ -1,10 +1,12 @@
 package com.mainstreethub.project;
 
+import com.mainstreethub.project.dao.JDBIModule;
 import com.mainstreethub.project.dao.UserDAO;
 import com.mainstreethub.project.resources.UsersResource;
 import io.dropwizard.Application;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
+import java.security.SecureRandom;
 import org.skife.jdbi.v2.DBI;
 
 public class ProjectApplication extends Application<ProjectConfiguration> {
@@ -14,11 +16,11 @@ public class ProjectApplication extends Application<ProjectConfiguration> {
 
   @Override
   public void run(ProjectConfiguration configuration, Environment environment) throws Exception {
-    DBIFactory factory = new DBIFactory();
-    DBI dbi = factory.build(environment, configuration.getDatabaseConfiguration(), "db");
+    ProjectComponent component = DaggerProjectComponent.builder()
+        .jDBIModule(new JDBIModule(configuration.getDatabaseConfiguration(), environment))
+        .projectModule(new ProjectModule())
+        .build();
 
-    UserDAO dao = dbi.onDemand(UserDAO.class);
-
-    environment.jersey().register(new UsersResource(dao));
+    environment.jersey().register(component.getUsersResource());
   }
 }

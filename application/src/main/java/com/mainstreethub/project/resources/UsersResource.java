@@ -8,6 +8,7 @@ import com.mainstreethub.project.dao.UserDAO;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.SecureRandom;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,6 +20,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -26,9 +29,10 @@ public class UsersResource {
   private final UserDAO dao;
   private final SecureRandom random;
 
-  public UsersResource(UserDAO dao) {
-    this.dao = dao;
-    this.random = new SecureRandom();
+  @Inject
+  UsersResource(UserDAO dao, SecureRandom random) {
+    this.dao = checkNotNull(dao);
+    this.random = checkNotNull(random);
   }
 
   @POST
