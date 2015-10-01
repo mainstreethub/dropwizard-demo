@@ -8,7 +8,7 @@ public class ProjectConfiguration extends Configuration {
   @JsonProperty("database")
   private DataSourceFactory database = new DataSourceFactory();
 
-  public DataSourceFactory getDatabaseConfiguration() {
+  public DataSourceFactory getDatabase() {
     return database;
   }
 }
