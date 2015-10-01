@@ -25,11 +25,11 @@
     <dagger.version>2.0</dagger.version>
     <dropwizard.version>0.8.1</dropwizard.version>
     <guava.version>18.0</guava.version>
-    <h2.version>1.4.187</h2.version>
     <jackson.api.version>2.5.0</jackson.api.version>
     <jackson.version>2.5.1</jackson.version>
     <junit.version>4.12</junit.version>
     <mockito.version>1.10.19</mockito.version>
+    <dropwizard.version.bundle.version>0.8.1-2</dropwizard.version.bundle.version>
   </properties>
 
   <build>
@@ -103,11 +103,6 @@
         <version>${dropwizard.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2</artifactId>
-        <version>${h2.version}</version>
-      </dependency>
-      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>${junit.version}</version>
@@ -116,6 +111,11 @@
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
         <version>${mockito.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.dropwizard-bundles</groupId>
+        <artifactId>dropwizard-version-bundle</artifactId>
+        <version>${dropwizard.version.bundle.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
