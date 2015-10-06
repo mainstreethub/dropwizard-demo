@@ -1,4 +1,4 @@
-package com.mainstreethub.project;
+package com.mainstreethub.project.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,6 +8,12 @@ public class User {
   private final String first;
   private final String last;
 
+  /**
+   * User object.
+   * @param username User's username
+   * @param first User's first name
+   * @param last User's last name.
+   */
   @JsonCreator
   public User(@JsonProperty("username") String username,
               @JsonProperty("first") String first,

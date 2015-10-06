@@ -10,7 +10,7 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 
-public interface UserDAO {
+public interface UserDao {
   @SqlUpdate("INSERT INTO users (username, first, last, salt, hash) "
              + "VALUES (:username, :first, :last, :salt, :hash)")
   @GetGeneratedKeys
@@ -22,7 +22,7 @@ public interface UserDAO {
 
   @SqlQuery("SELECT username, first, last FROM users WHERE id=:id")
   @Mapper(UserMapper.class)
-  DBUser findUserById(@Bind("id") long id);
+  DbUser findUserById(@Bind("id") long id);
 
   @SqlUpdate("DELETE FROM users WHERE id=:id")
   int deleteUser(@Bind("id") long id);
@@ -32,22 +32,22 @@ public interface UserDAO {
                      @Bind("salt") String salt,
                      @Bind("hash") String hash);
 
-  static final class DBUser {
+  static final class DbUser {
     public final String username;
     public final String first;
     public final String last;
 
-    public DBUser(String username, String first, String last) {
+    public DbUser(String username, String first, String last) {
       this.username = username;
       this.first = first;
       this.last = last;
     }
   }
 
-  static final class UserMapper implements ResultSetMapper<DBUser> {
+  static final class UserMapper implements ResultSetMapper<DbUser> {
     @Override
-    public DBUser map(int index, ResultSet r, StatementContext ctx) throws SQLException {
-      return new DBUser(r.getString("username"), r.getString("first"), r.getString("last"));
+    public DbUser map(int index, ResultSet r, StatementContext ctx) throws SQLException {
+      return new DbUser(r.getString("username"), r.getString("first"), r.getString("last"));
     }
   }
 }

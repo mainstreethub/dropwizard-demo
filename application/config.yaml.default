@@ -1,0 +1,51 @@
+# This is the development configuration for the Demo Application.
+# The actual production and test configs are generated at deployment time.
+# Make sure to update deployment configs in the ops repo when updating the
+# Configuration class.  Make
+
+database:
+  # the name of your JDBC driver
+  driverClass: com.mysql.jdbc.Driver
+
+  # the username - Make a copy of this file and change the value for dev work but don't check it in
+  user: CHANGEME
+
+  # the password - Make a copy of this file and change the value for dev work but don't check it in
+  password: CHANGEMETOO
+
+  # the JDBC URL
+  url: jdbc:mysql://CHANGEMETHREE
+
+  # the maximum amount of time to wait on an empty pool before throwing an exception
+  maxWaitForConnection: 1s
+
+  # the SQL query to run when validating a connection's liveness
+  validationQuery: "/* Demo Health Check */ SELECT 1"
+
+  # the timeout before a connection validation queries fail
+  validationQueryTimeout: 3s
+
+  # the minimum number of connections to keep open
+  minSize: 8
+
+  # the maximum number of connections to keep open
+  maxSize: 32
+
+  # whether or not idle connections should be validated
+  checkConnectionWhileIdle: false
+
+  # the amount of time to sleep between runs of the idle connection validation, abandoned cleaner and idle pool resizing
+  evictionInterval: 10s
+
+  # the minimum amount of time an connection must sit idle in the pool before it is eligible for eviction
+  minIdleTime: 1 minute
+
+  # whether or not connections will be validated before being borrowed from the pool
+  checkConnectionOnBorrow: true
+
+authentication:
+  basic-http:
+    cache-spec: maximumSize=1000, expireAfterAccess=10m
+    realm: ProjectApplication
+    keys:
+      testKey: CHANGEME

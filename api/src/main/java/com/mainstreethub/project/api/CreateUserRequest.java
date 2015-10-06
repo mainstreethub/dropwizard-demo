@@ -1,4 +1,4 @@
-package com.mainstreethub.project;
+package com.mainstreethub.project.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,6 +9,13 @@ public class CreateUserRequest {
   private final String last;
   private final String password;
 
+  /**
+   * Creates a user request based on passed in parameters.
+   * @param username username of request to create
+   * @param first first name of user
+   * @param last last name of user
+   * @param password user's password
+   */
   @JsonCreator
   public CreateUserRequest(@JsonProperty("username") String username,
                            @JsonProperty("first") String first,
