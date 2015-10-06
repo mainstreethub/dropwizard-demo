@@ -11,30 +11,30 @@ import org.skife.jdbi.v2.DBI;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Module
-public class JDBIModule {
+public class JdbiModule {
   private final DataSourceFactory configuration;
   private final Environment environment;
 
-  public JDBIModule(DataSourceFactory configuration, Environment environment) {
+  public JdbiModule(DataSourceFactory configuration, Environment environment) {
     this.configuration = checkNotNull(configuration);
     this.environment = checkNotNull(environment);
   }
 
   @Singleton
   @Provides
-  public DBIFactory provideDBIFactory() {
+  public DBIFactory provideDbiFactory() {
     return new DBIFactory();
   }
 
   @Singleton
   @Provides
-  public DBI provideDBI(DBIFactory factory) {
+  public DBI provideDbi(DBIFactory factory) {
     return factory.build(environment, configuration, "db");
   }
 
   @Singleton
   @Provides
-  public UserDAO provideUserDAO(DBI dbi) {
-    return dbi.onDemand(UserDAO.class);
+  public UserDao provideUserDao(DBI dbi) {
+    return dbi.onDemand(UserDao.class);
   }
 }

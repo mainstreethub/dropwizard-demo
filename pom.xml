@@ -12,7 +12,7 @@
 
   <groupId>com.mainstreethub.project</groupId>
   <artifactId>parent</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>parent</name>
@@ -23,13 +23,15 @@
 
     <!-- Dependency versions. -->
     <dagger.version>2.0</dagger.version>
-    <dropwizard.version>0.8.1</dropwizard.version>
+    <dropwizard.version>0.8.4</dropwizard.version>
+    <dropwizard-api-key.version>0.8.4-1</dropwizard-api-key.version>
     <guava.version>18.0</guava.version>
-    <jackson.api.version>2.5.0</jackson.api.version>
     <jackson.version>2.5.1</jackson.version>
     <junit.version>4.12</junit.version>
+    <mysql.version>5.1.34</mysql.version>
     <mockito.version>1.10.19</mockito.version>
-    <dropwizard.version.bundle.version>0.8.1-2</dropwizard.version.bundle.version>
+    <commons-codec.version>1.10</commons-codec.version>
+    <retrofit.version>1.9.0</retrofit.version>
   </properties>
 
   <build>
@@ -37,24 +39,40 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.2</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-          <compilerArgument>-Xlint:all</compilerArgument>
-          <showWarnings>true</showWarnings>
-          <showDeprecation>true</showDeprecation>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
-
-      <!-- Don't worry about syntactically correct javadocs. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.1</version>
-        <configuration>
-          <additionalparam>-Xdoclint:none</additionalparam>
-        </configuration>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.18.1</version>
+      </plugin>
+      <!-- Enforce code style. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>2.14</version>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <configLocation>checkstyle.xml</configLocation>
+              <violationSeverity>warning</violationSeverity>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>6.1.1</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
@@ -64,7 +82,7 @@
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-annotations</artifactId>
-        <version>${jackson.api.version}</version>
+        <version>${jackson.version}</version>
       </dependency>
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
@@ -98,30 +116,99 @@
         <version>${dropwizard.version}</version>
       </dependency>
       <dependency>
+        <groupId>io.dropwizard-bundles</groupId>
+        <artifactId>dropwizard-api-key-bundle</artifactId>
+        <version>${dropwizard-api-key.version}</version>
+      </dependency>
+    <dependency>
         <groupId>io.dropwizard</groupId>
         <artifactId>dropwizard-testing</artifactId>
         <version>${dropwizard.version}</version>
       </dependency>
       <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>${junit.version}</version>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+        <version>${commons-codec.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-core</artifactId>
-        <version>${mockito.version}</version>
+        <groupId>io.dropwizard</groupId>
+        <artifactId>dropwizard-jackson</artifactId>
+        <version>${dropwizard.version}</version>
       </dependency>
       <dependency>
         <groupId>io.dropwizard-bundles</groupId>
         <artifactId>dropwizard-version-bundle</artifactId>
-        <version>${dropwizard.version.bundle.version}</version>
+        <version>${dropwizard.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.datatype</groupId>
+        <artifactId>jackson-datatype-jdk8</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.module</groupId>
+        <artifactId>jackson-module-parameter-names</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <!-- MySQL-->
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
+      </dependency>
+      <!-- Test Dependencies-->
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockito.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.groupon.mysql</groupId>
+        <artifactId>mysql-junit4</artifactId>
+        <version>${groupon-mysql.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-maven-plugin</artifactId>
+        <version>${flyway.version}</version>
+        <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>com.squareup.retrofit</groupId>
+        <artifactId>converter-jackson</artifactId>
+        <version>${retrofit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.squareup.retrofit</groupId>
+        <artifactId>retrofit</artifactId>
+        <version>${retrofit.version}</version>
       </dependency>
     </dependencies>
-  </dependencyManagement>
 
+  </dependencyManagement>
   <modules>
     <module>api</module>
     <module>application</module>
+    <module>client</module>
   </modules>
+  <scm>
+    <connection>scm:git:git@github.com:mainstreethub/dropwizard-demo</connection>
+    <developerConnection>scm:git:git@github.com:mainstreethub/dropwizard-demo</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/mainstreethub/dropwizard-demo</url>
+  </scm>
 </project>

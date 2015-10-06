@@ -20,3 +20,6 @@ reports/
 
 # Local database files
 *.db
+
+# Configuration YAML, will typically have Database passwords
+config.yaml
