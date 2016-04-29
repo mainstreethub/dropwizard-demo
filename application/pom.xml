@@ -83,6 +83,10 @@
       <artifactId>dropwizard-flyway</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.split.client</groupId>
+      <artifactId>java-client</artifactId>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>

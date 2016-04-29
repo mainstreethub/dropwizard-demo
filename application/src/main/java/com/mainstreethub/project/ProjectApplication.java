@@ -45,10 +45,11 @@ public class ProjectApplication extends Application<ProjectConfiguration> {
 
     ProjectComponent component = DaggerProjectComponent.builder()
         .jDBIModule(new JDBIModule(configuration.getDatabase(), environment))
-        .projectModule(new ProjectModule())
+        .projectModule(new ProjectModule(configuration))
         .build();
 
     environment.jersey().register(component.getUsersResource());
+    environment.jersey().register(component.getNeatoResource());
   }
 
   private void initFlyway(Bootstrap<ProjectConfiguration> bootstrap) {
