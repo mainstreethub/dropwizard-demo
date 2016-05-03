@@ -23,12 +23,14 @@
 
     <!-- Dependency versions. -->
     <dagger.version>2.0</dagger.version>
-    <dropwizard.version>0.8.1</dropwizard.version>
+    <dropwizard.version>0.9.2</dropwizard.version>
+    <flyway.bundle.version>0.8.0-2</flyway.bundle.version>
     <guava.version>18.0</guava.version>
-    <jackson.api.version>2.5.0</jackson.api.version>
-    <jackson.version>2.5.1</jackson.version>
+    <jackson.api.version>2.6.3</jackson.api.version>
+    <jackson.version>2.6.3</jackson.version>
     <junit.version>4.12</junit.version>
     <mockito.version>1.10.19</mockito.version>
+    <mysql.version>5.1.36</mysql.version>
     <dropwizard.version.bundle.version>0.8.1-2</dropwizard.version.bundle.version>
   </properties>
 
@@ -103,9 +105,19 @@
         <version>${dropwizard.version}</version>
       </dependency>
       <dependency>
+        <groupId>io.dropwizard.modules</groupId>
+        <artifactId>dropwizard-flyway</artifactId>
+        <version>${flyway.bundle.version}</version>
+      </dependency>
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>${junit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
