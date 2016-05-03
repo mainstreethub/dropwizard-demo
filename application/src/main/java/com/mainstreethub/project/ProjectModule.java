@@ -7,6 +7,7 @@ import dagger.Provides;
 
 import io.split.client.SplitClient;
 import io.split.client.SplitClientBuilder;
+import io.split.client.SplitClientConfig;
 
 import java.io.IOException;
 import java.security.SecureRandom;
@@ -30,7 +31,8 @@ public class ProjectModule {
   @Provides
   public SplitClient provideSplitClient() {
     try {
-      return SplitClientBuilder.build(configuration.getSplitio().getApikey());
+      SplitClientConfig config = SplitClientConfig.builder().pollForFeatureChangesEveryNSeconds(10).build();
+      return SplitClientBuilder.build(configuration.getSplitio().getApikey(), config);
     } catch (IOException e) {
       throw Throwables.propagate(e);
     }
